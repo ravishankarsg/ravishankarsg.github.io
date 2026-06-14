@@ -61,6 +61,17 @@ nav{
   padding:4px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;
 }
 .nav-links a:hover,.nav-links a:focus-visible{color:var(--ink);border-color:var(--amber)}
+.nav-right{display:flex;align-items:center;gap:28px}
+.nav-cv{
+  font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.13em;
+  text-transform:uppercase;font-weight:600;text-decoration:none;
+  color:var(--ink);background:var(--amber);
+  padding:9px 18px;border-radius:999px;white-space:nowrap;
+  box-shadow:0 2px 8px rgba(181,126,26,.28);
+  transition:background .2s,transform .15s,box-shadow .2s;
+}
+.nav-cv:hover,.nav-cv:focus-visible{background:#E8AC42;transform:translateY(-1px);box-shadow:0 4px 14px rgba(181,126,26,.36)}
+.nav-cv.current{background:var(--amber-deep);color:#fff}
 a:focus-visible,button:focus-visible{outline:2px solid var(--sea);outline-offset:3px;border-radius:2px}
 .menu-btn{display:none;background:none;border:1px solid var(--line);border-radius:6px;padding:8px 12px;font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;color:var(--ink);cursor:pointer}
 
@@ -69,10 +80,13 @@ header.hero{
   position:relative;overflow:hidden;
   background:linear-gradient(180deg,var(--ink) 0%,#11433F 70%,#16504A 100%);
   color:#EAF4F0;
+  min-height:calc(100vh - 64px);
+  display:flex;flex-direction:column;justify-content:space-between;
 }
 .hero-inner{
-  max-width:1080px;margin:0 auto;padding:96px 28px 0;
+  width:100%;max-width:1080px;margin:0 auto;padding:72px 28px 0;
   position:relative;z-index:2;
+  flex:1;display:flex;align-items:center;
 }
 .hero-eyebrow{
   font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.22em;
@@ -119,7 +133,7 @@ h1{
 
 
 /* ---------- Photos ---------- */
-.hero-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:48px;align-items:center}
+.hero-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:48px;align-items:center;width:100%}
 .hero-portrait{justify-self:end}
 .hero-portrait img{
   width:min(300px,100%);aspect-ratio:1/1;object-fit:cover;display:block;
@@ -326,10 +340,51 @@ footer{
 .reveal.in{opacity:1;transform:none}
 @media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none}}
 
-/* ---------- Responsive ---------- */
-@media (max-width:880px){
+/* ---------- CV ---------- */
+.cv-top{display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;margin-bottom:34px}
+.cv-top .lede{margin:0}
+.btn-download{
+  display:inline-flex;align-items:center;gap:9px;white-space:nowrap;
+  background:var(--amber);color:var(--ink);text-decoration:none;font-weight:600;
+  font-size:.92rem;padding:13px 24px;border-radius:6px;transition:transform .15s,background .2s;
+}
+.btn-download:hover{background:#E8AC42;transform:translateY(-1px)}
+.btn-download svg{width:17px;height:17px}
+.cv-metrics{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:40px;
+}
+.cv-metric{
+  background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px 20px;text-align:center;
+}
+.cv-metric .num{
+  font-family:'Newsreader',serif;font-weight:600;font-size:2rem;color:var(--ink);line-height:1;
+}
+.cv-metric .lbl{
+  font-family:'IBM Plex Mono',monospace;font-size:.64rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);margin-top:8px;
+}
+.cv-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.cv-block h3{
+  font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:500;
+}
+.cv-block + .cv-block{margin-top:0}
+.cv-list{list-style:none;margin-bottom:30px}
+.cv-list li{padding:11px 0;border-top:1px dashed var(--line);font-size:.92rem}
+.cv-list li:first-child{border-top:none}
+.cv-list .t{font-weight:600;color:var(--ink)}
+.cv-list .s{color:var(--muted);font-size:.86rem;line-height:1.5}
+.cv-tags{display:flex;flex-wrap:wrap;gap:8px}
+.cv-tags span{
+  font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.05em;
+  background:var(--mist);color:var(--ink-soft);padding:5px 11px;border-radius:5px;
+}
+
+
   .stats-inner{grid-template-columns:repeat(2,1fr)}
   .about-grid,.split{grid-template-columns:1fr;gap:36px}
+  .cv-grid{grid-template-columns:1fr;gap:30px}
+  .cv-metrics{grid-template-columns:repeat(2,1fr)}
   .focus-grid{grid-template-columns:1fr}
   .proj{grid-template-columns:1fr;gap:10px}
   .svc-grid{grid-template-columns:1fr}
@@ -343,6 +398,8 @@ footer{
   .nav-links.open{display:flex}
   .nav-links li{padding:10px 0}
   .menu-btn{display:block}
+  .nav-right{gap:12px}
+  .nav-cv{font-size:.62rem;padding:8px 13px;letter-spacing:.1em}
 }
 </style>
 </head>
@@ -351,15 +408,18 @@ footer{
 <nav>
   <div class="nav-inner">
     <a class="nav-name" href="#top">Ravi Shankar<span>.</span></a>
-    <button class="menu-btn" aria-expanded="false" aria-controls="navlinks" onclick="toggleMenu(this)">Menu</button>
-    <ul class="nav-links" id="navlinks">
-      <li><a href="#about">About</a></li>
-      <li><a href="#focus">Research</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#publications">Publications</a></li>
-      <li><a href="#grants">Grants &amp; Awards</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+    <div class="nav-right">
+      <ul class="nav-links" id="navlinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#focus">Research</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#grants">Grants &amp; Awards</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a class="nav-cv" href="#cv">Curriculum Vitae</a>
+      <button class="menu-btn" aria-expanded="false" aria-controls="navlinks" onclick="toggleMenu(this)">Menu</button>
+    </div>
   </div>
 </nav>
 
@@ -367,7 +427,6 @@ footer{
   <div class="hero-inner">
     <div class="hero-grid">
     <div>
-    <div class="hero-eyebrow">Healthcare Researcher &middot; Singapore</div>
     <h1>Dr. Ravi Shankar</h1>
     <p class="hero-sub">
       I work at the intersection of <strong>clinical artificial intelligence</strong>, <strong>implementation science</strong>, and <strong>health economics</strong>, translating digital health innovations from evidence to practice within Singapore's public healthcare system.
@@ -731,6 +790,73 @@ footer{
   </div>
 </section>
 
+<section id="cv" class="tab-panel" data-tab="cv">
+  <div class="eyebrow">Curriculum Vitae</div>
+  <h2>Curriculum vitae</h2>
+  <div class="cv-top reveal">
+    <p class="lede">A full account of my positions, qualifications, research interests, and complete publication record is available as a downloadable document.</p>
+    <a class="btn-download" href="CV_Ravi_Shankar.pdf" download>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      Download CV (PDF)
+    </a>
+  </div>
+
+  <div class="cv-metrics reveal">
+    <div class="cv-metric"><div class="num">70</div><div class="lbl">Publications</div></div>
+    <div class="cv-metric"><div class="num">4.14</div><div class="lbl">Avg. impact factor</div></div>
+    <div class="cv-metric"><div class="num">11</div><div class="lbl">h-index</div></div>
+    <div class="cv-metric"><div class="num">15</div><div class="lbl">i10-index</div></div>
+  </div>
+
+  <div class="cv-grid">
+    <div class="cv-block reveal">
+      <h3>Current positions</h3>
+      <ul class="cv-list">
+        <li>
+          <div class="t">Research Fellow</div>
+          <div class="s">Clinical Research and Innovation Office, Tan Tock Seng Hospital, National Healthcare Group, Singapore</div>
+        </li>
+        <li>
+          <div class="t">Visiting Research Clinician Scientist</div>
+          <div class="s">Rehabilitation Research Institute of Singapore (RRIS), Nanyang Technological University, Singapore</div>
+        </li>
+      </ul>
+      <h3>Education</h3>
+      <ul class="cv-list">
+        <li>
+          <div class="t">PhD, Project Management</div>
+          <div class="s">National University of Singapore, 2017 to 2021</div>
+        </li>
+        <li>
+          <div class="t">Bachelor and Master of Technology (Dual Degree)</div>
+          <div class="s">Indian Institute of Technology Madras, 2010 to 2015</div>
+        </li>
+      </ul>
+    </div>
+    <div class="cv-block reveal">
+      <h3>Research interests</h3>
+      <div class="cv-tags" style="margin-bottom:30px">
+        <span>Health Services Research</span>
+        <span>Health Policy</span>
+        <span>Health Technology Assessment</span>
+        <span>Digital Health Interventions</span>
+        <span>Implementation Science</span>
+        <span>Health Economics</span>
+      </div>
+      <h3>Technical skills</h3>
+      <div class="cv-tags">
+        <span>Randomized Controlled Trial Design</span>
+        <span>Grant Writing</span>
+        <span>AI and VR in Healthcare</span>
+        <span>Economic Evaluation</span>
+        <span>Python</span>
+        <span>STATA</span>
+        <span>TreeAge Pro</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div class="contact reveal in tab-panel" id="contact" data-tab="contact">
   <div class="eyebrow">Contact</div>
   <h2>Collaborate or get in touch</h2>
@@ -776,14 +902,14 @@ footer{
 })();
 
 // Tab navigation: show only the selected section
-const TAB_IDS = ['about','focus','projects','publications','grants','contact'];
+const TAB_IDS = ['about','focus','projects','publications','grants','cv','contact'];
 function showTab(id){
   if (!TAB_IDS.includes(id)) id = 'about';
   document.querySelectorAll('.tab-panel').forEach(p => {
     p.classList.toggle('active', p.getAttribute('data-tab') === id);
   });
   // Mark current nav link
-  document.querySelectorAll('.nav-links a').forEach(a => {
+  document.querySelectorAll('.nav-links a, .nav-cv').forEach(a => {
     a.classList.toggle('current', a.getAttribute('href') === '#' + id);
   });
   // Make revealed content visible immediately within the shown tab
