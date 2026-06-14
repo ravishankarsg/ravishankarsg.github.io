@@ -21,9 +21,10 @@
   --line:#C6D7D1;
   --text:#1C2B29;
   --muted:#526762;
+  --side:240px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:84px}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -35,57 +36,53 @@ body{
   line-height:1.65;
   font-size:16.5px;
   -webkit-font-smoothing:antialiased;
+  padding-left:var(--side);
 }
 ::selection{background:var(--amber);color:var(--ink)}
 
-/* ---------- Nav ---------- */
-nav{
-  position:sticky;top:0;z-index:50;
-  background:rgba(244,248,246,.92);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--line);
+/* ---------- Sidebar nav ---------- */
+nav.sidebar{
+  position:fixed;left:0;top:0;bottom:0;width:var(--side);z-index:50;
+  background:var(--paper);color:var(--ink);
+  display:flex;flex-direction:column;justify-content:center;gap:40px;
+  padding:48px 30px;
+  border-right:1px solid var(--line);
+  border-left:6px solid var(--ink);
+  box-shadow:4px 0 22px rgba(14,59,59,.07);
 }
-.nav-inner{
-  max-width:1280px;margin:0 auto;padding:0 40px;
-  display:flex;align-items:center;justify-content:space-between;min-height:64px;
-}
-.nav-name{
-  font-family:'Newsreader',serif;font-weight:600;font-size:1.15rem;color:var(--ink);
-  text-decoration:none;letter-spacing:.01em;
-}
-.nav-name span{color:var(--amber-deep)}
-.nav-links{display:flex;gap:34px;list-style:none;flex-wrap:wrap}
+.nav-links{display:flex;flex-direction:column;gap:4px;list-style:none}
 .nav-links a{
-  font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--muted);text-decoration:none;
-  padding:4px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;
+  display:block;
+  font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-soft);text-decoration:none;
+  padding:9px 0 9px 16px;border-left:2px solid transparent;
+  transition:color .2s,border-color .2s,padding-left .2s;
 }
-.nav-links a:hover,.nav-links a:focus-visible{color:var(--ink);border-color:var(--amber)}
+.nav-links a:hover,.nav-links a:focus-visible{color:var(--ink);border-color:var(--amber);padding-left:20px}
 .nav-links a.current{color:var(--ink);border-color:var(--amber)}
-.nav-right{display:flex;align-items:center;justify-content:space-between;flex:1;gap:34px;flex-wrap:wrap}
 .nav-cv{
+  align-self:flex-start;
   font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.13em;
   text-transform:uppercase;font-weight:600;text-decoration:none;
   color:var(--ink);background:var(--amber);
-  padding:9px 18px;border-radius:999px;white-space:nowrap;
-  box-shadow:0 2px 8px rgba(181,126,26,.28);
+  padding:11px 20px;border-radius:999px;white-space:nowrap;
+  box-shadow:0 3px 12px rgba(181,126,26,.32);
   transition:background .2s,transform .15s,box-shadow .2s;
 }
-.nav-cv:hover,.nav-cv:focus-visible{background:#E8AC42;transform:translateY(-1px);box-shadow:0 4px 14px rgba(181,126,26,.36)}
+.nav-cv:hover,.nav-cv:focus-visible{background:#E8AC42;transform:translateY(-1px);box-shadow:0 6px 18px rgba(181,126,26,.4)}
 .nav-cv.current{background:var(--amber-deep);color:#fff}
 a:focus-visible,button:focus-visible{outline:2px solid var(--sea);outline-offset:3px;border-radius:2px}
-.menu-btn{display:none;background:none;border:1px solid var(--line);border-radius:6px;padding:8px 12px;font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;color:var(--ink);cursor:pointer}
 
 /* ---------- Hero ---------- */
 header.hero{
   position:relative;overflow:hidden;
-  background:linear-gradient(180deg,var(--ink) 0%,#11433F 70%,#16504A 100%);
+  background:linear-gradient(165deg, #195149 0%, #11433F 55%, var(--ink) 100%);
   color:#EAF4F0;
-  min-height:calc(100vh - 64px);
+  min-height:100vh;
   display:flex;flex-direction:column;justify-content:space-between;
 }
 .hero-inner{
-  width:100%;max-width:1280px;margin:0 auto;padding:72px 40px 0;
+  width:100%;max-width:1500px;margin:0 auto;padding:80px 6vw 0;
   position:relative;z-index:2;
   flex:1;display:flex;align-items:center;
 }
@@ -95,11 +92,11 @@ header.hero{
 }
 h1{
   font-family:'Newsreader',serif;font-weight:500;
-  font-size:clamp(2.8rem,6.2vw,5rem);line-height:1.03;letter-spacing:-.01em;
-  max-width:15ch;
+  font-size:clamp(3rem,6.5vw,5.6rem);line-height:1.02;letter-spacing:-.01em;
+  max-width:16ch;
 }
 .hero-sub{
-  margin-top:28px;max-width:62ch;font-size:1.12rem;font-weight:300;
+  margin-top:28px;max-width:60ch;font-size:1.14rem;font-weight:300;
   color:#C8DCD5;line-height:1.72;
 }
 .hero-sub strong{color:#fff;font-weight:500}
@@ -134,10 +131,10 @@ h1{
 
 
 /* ---------- Photos ---------- */
-.hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:72px;align-items:center;width:100%}
+.hero-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:90px;align-items:center;width:100%}
 .hero-portrait{justify-self:end}
 .hero-portrait img{
-  width:min(360px,100%);aspect-ratio:1/1;object-fit:cover;display:block;
+  width:min(400px,100%);aspect-ratio:1/1;object-fit:cover;display:block;
   border-radius:20px;border:3px solid rgba(217,154,43,.65);
   box-shadow:0 22px 56px rgba(0,0,0,.4);
 }
@@ -168,7 +165,7 @@ section#grants.active{border-bottom:1px solid var(--line)}
 .nav-links a.current{color:var(--ink);border-color:var(--amber)}
 
 /* ---------- Sections ---------- */
-main{max-width:1280px;margin:0 auto;padding:0 40px}
+main{max-width:1400px;margin:0 auto;padding:0 6vw}
 section{padding:84px 0;border-bottom:1px solid var(--line)}
 section:last-of-type{border-bottom:none}
 .eyebrow{
@@ -361,7 +358,20 @@ footer{
 .cv-fallback{padding:56px 28px;text-align:center;color:var(--muted)}
 .cv-fallback p{margin-bottom:18px}
 
-
+/* ---------- Responsive ---------- */
+@media (max-width:880px){
+  body{padding-left:0}
+  nav.sidebar{
+    position:sticky;top:0;left:auto;bottom:auto;width:auto;
+    flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;
+    gap:12px 18px;padding:12px 18px;
+    border-right:none;border-left:none;
+    border-top:4px solid var(--ink);border-bottom:1px solid var(--line);
+    box-shadow:0 4px 14px rgba(14,59,59,.06);
+  }
+  .nav-links{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:12px 18px}
+  .nav-links a,.nav-links a:hover,.nav-links a:focus-visible{border-left:none;padding:4px 0;font-size:.66rem;letter-spacing:.08em}
+  .nav-cv{align-self:auto;font-size:.64rem;padding:8px 14px}
   .stats-inner{grid-template-columns:repeat(2,1fr)}
   .about-grid,.split{grid-template-columns:1fr;gap:36px}
   .cv-actions{justify-content:center}
@@ -371,30 +381,21 @@ footer{
   .svc-grid{grid-template-columns:1fr}
   .contact{padding:36px 26px}
   ol.pub-list li{padding-left:38px}
-  .nav-inner{padding:12px 22px}
-  .nav-links{gap:16px 18px;justify-content:center}
-  .nav-links a{font-size:.66rem;letter-spacing:.08em}
-  .nav-right{justify-content:center;gap:14px}
-  .nav-cv{font-size:.64rem;padding:8px 14px;letter-spacing:.1em}
 }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <div class="nav-right">
-      <ul class="nav-links" id="navlinks">
-        <li><a href="#about">About</a></li>
-        <li><a href="#focus">Research</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#publications">Publications</a></li>
-        <li><a href="#grants">Grants &amp; Awards</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <a class="nav-cv" href="#cv">Curriculum Vitae</a>
-    </div>
-  </div>
+<nav class="sidebar">
+  <ul class="nav-links" id="navlinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#focus">Research</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#grants">Grants &amp; Awards</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-cv" href="#cv">Curriculum Vitae</a>
 </nav>
 
 <header class="hero" id="top">
@@ -403,7 +404,7 @@ footer{
     <div>
     <h1>Dr. Ravi Shankar</h1>
     <p class="hero-sub">
-      I work at the intersection of <strong>clinical artificial intelligence</strong>, <strong>implementation science</strong>, and <strong>health economics</strong>, translating digital health innovations from evidence to practice within Singapore's public healthcare system.
+      My work covers <strong>clinical artificial intelligence</strong>, <strong>implementation science</strong>, <strong>health services research</strong>, and <strong>health economics</strong>, with a focus on translating digital health tools from research into clinical practice. I am a <strong>Research Fellow</strong> at Tan Tock Seng Hospital and a <strong>Visiting Research Clinician Scientist</strong> at the Rehabilitation Research Institute of Singapore. My work to date has spanned two of Singapore's three public healthcare clusters, the National Healthcare Group and the National University Health System.
     </p>
     <div class="hero-tags">
       <a href="https://scholar.google.com/citations?view_op=search_authors&amp;hl=en&amp;mauthors=label:health_services_research" target="_blank" rel="noopener">Health Services Research</a>
@@ -846,7 +847,8 @@ function goTab(id){
   if (history.pushState) history.pushState(null, '', '#' + id);
   const nav = document.querySelector('nav');
   const main = document.querySelector('main');
-  const y = main.getBoundingClientRect().top + window.pageYOffset - (nav ? nav.offsetHeight : 0) - 8;
+  const topBar = window.innerWidth <= 880 && nav ? nav.offsetHeight : 0;
+  const y = main.getBoundingClientRect().top + window.pageYOffset - topBar - 16;
   window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
 }
 // Intercept all in-page anchor links (nav, hero buttons, name)
