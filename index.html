@@ -162,6 +162,8 @@ h1{
 .tab-panel.active{display:block}
 section.tab-panel{border-bottom:none}
 section#grants.active{border-bottom:1px solid var(--line)}
+/* When About, Research and Projects share one tab, divide the stacked sections */
+section#focus.active,section#projects.active{border-top:1px solid var(--line)}
 .nav-links a.current{color:var(--ink);border-color:var(--amber)}
 
 /* ---------- Sections ---------- */
@@ -252,10 +254,11 @@ h2{
 ol.pub-list{list-style:none;counter-reset:none}
 ol.pub-list li{
   padding:15px 0 15px 52px;border-bottom:1px dashed var(--line);position:relative;
+  counter-increment:pub;
 }
 ol.pub-list li:last-child{border-bottom:none}
 ol.pub-list li::before{
-  content:attr(data-n);
+  content:counter(pub, decimal-leading-zero);
   position:absolute;left:0;top:18px;
   font-family:'IBM Plex Mono',monospace;font-size:.74rem;color:var(--amber-deep);
 }
@@ -389,8 +392,6 @@ footer{
 <nav class="sidebar">
   <ul class="nav-links" id="navlinks">
     <li><a href="#about">About</a></li>
-    <li><a href="#focus">Research</a></li>
-    <li><a href="#projects">Projects</a></li>
     <li><a href="#publications">Publications</a></li>
     <li><a href="#grants">Grants &amp; Awards</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -464,7 +465,7 @@ footer{
   </div>
 </section>
 
-<section id="focus" class="tab-panel" data-tab="focus">
+<section id="focus" class="tab-panel" data-tab="about">
   <div class="eyebrow">Research Focus</div>
   <h2>Four connected programmes of work</h2>
   <div class="focus-grid">
@@ -491,7 +492,7 @@ footer{
   </div>
 </section>
 
-<section id="projects" class="tab-panel" data-tab="projects">
+<section id="projects" class="tab-panel" data-tab="about">
   <div class="eyebrow">Selected Projects</div>
   <h2>Active and recent work</h2>
 
@@ -568,16 +569,17 @@ footer{
   </div>
 </section>
 
-<section id="publications" class="tab-panel" data-tab="publications">
+<section id="publications" class="tab-panel" data-tab="publications" style="counter-reset:pub">
   <div class="eyebrow">Publications</div>
   <h2>Complete publication record</h2>
-  <p class="lede">Author of 70 peer-reviewed publications with an H-Index of 11, spanning digital health and clinical AI, rehabilitation, health economics, qualitative research, and evidence synthesis. The full record is also available on <a href="https://scholar.google.com/citations?user=HhnbeWsAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a> and <a href="https://orcid.org/0009-0005-5578-3481" target="_blank" rel="noopener">ORCID</a>.</p>
+  <p class="lede">Author of 71 peer-reviewed publications with an H-Index of 11, spanning digital health and clinical AI, rehabilitation, health economics, qualitative research, and evidence synthesis. The full record is also available on <a href="https://scholar.google.com/citations?user=HhnbeWsAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a> and <a href="https://orcid.org/0009-0005-5578-3481" target="_blank" rel="noopener">ORCID</a>.</p>
 
   <div class="pub-year reveal">
-    <h3>2026 <span class="count">28 publications</span></h3>
+    <h3>2026 <span class="count">29 publications</span></h3>
     <ol class="pub-list">
       <li data-n="01"><a class="p-title" href="https://doi.org/10.1038/s41746-026-02789-x" target="_blank" rel="noopener">Performance of large language models for extracting clinical data from breast cancer pathology reports: A systematic review</a><div class="p-detail">Shankar R, Sundar V, Goh Z, Sin PY, Tan EY &middot; <i>npj Digital Medicine</i><span class="jf">Q1 &middot; IF 15.1</span></div></li>
       <li data-n="02"><a class="p-title" href="https://doi.org/10.1177/18911803261460855" target="_blank" rel="noopener">Barriers and Facilitators to the Adoption of Speech-Based Cognitive Screening Tools: A Protocol for Systematic Review of Qualitative Evidence</a><div class="p-detail">Shankar R, Sundar V, Chua KSG &middot; <i>Campbell Systematic Reviews</i><span class="jf">Q1 &middot; IF 7.1</span></div></li>
+      <li><a class="p-title" href="https://doi.org/10.1186/s12984-026-02055-x" target="_blank" rel="noopener">Feasibility, acceptability, and functional outcomes of a home-based exergaming telerehabilitation program for adults with functional disabilities: A multi-center single-arm pilot study</a><div class="p-detail">Shankar R, Ong RCL, Yee E, Duraisamy R, Ho BCY, Sim R, Kuah CWK, Ong PL &middot; <i>Journal of NeuroEngineering and Rehabilitation</i><span class="jf">Q1 &middot; IF 5.2</span></div></li>
       <li data-n="03"><a class="p-title" href="https://doi.org/10.1016/j.amjmed.2026.05.010" target="_blank" rel="noopener">The Jevons trap: when artificial intelligence in healthcare creates endless work</a><div class="p-detail">Shankar R &middot; <i>The American Journal of Medicine</i><span class="jf">Q1 &middot; IF 5.3</span></div></li>
       <li data-n="04"><a class="p-title" href="https://doi.org/10.1016/j.ijmedinf.2026.106411" target="_blank" rel="noopener">The role of artificial intelligence in virtual emergency care: a systematic review</a><div class="p-detail">Shankar R, Wang L, Hoe HS, Lee IY, Liew MF, Gollamudi SPK, Wong TC, Wong S &middot; <i>International Journal of Medical Informatics</i><span class="jf">Q1 &middot; IF 4.1</span></div></li>
       <li data-n="05"><a class="p-title" href="https://doi.org/10.1186/s13643-026-03220-y" target="_blank" rel="noopener">Effectiveness and user experience of ambient artificial intelligence-driven scribe technology among clinicians: A protocol for a systematic review</a><div class="p-detail">Shankar R, Kumar FDS, Bundele A, Mukhopadhyay A &middot; <i>Systematic Reviews</i><span class="jf">Q1 &middot; IF 3.9</span></div></li>
@@ -829,7 +831,7 @@ footer{
 })();
 
 // Tab navigation: show only the selected section
-const TAB_IDS = ['about','focus','projects','publications','grants','cv','contact'];
+const TAB_IDS = ['about','publications','grants','cv','contact'];
 function showTab(id){
   if (!TAB_IDS.includes(id)) id = 'about';
   document.querySelectorAll('.tab-panel').forEach(p => {
