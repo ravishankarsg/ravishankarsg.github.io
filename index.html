@@ -121,36 +121,76 @@ h1{
 /* hero decorative layers */
 header.hero::before{
   content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:radial-gradient(560px 420px at 8% 92%, rgba(46,110,106,.32), transparent 72%);
+  background:
+    radial-gradient(680px 520px at 8% 92%, rgba(46,110,106,.48), transparent 70%),
+    radial-gradient(620px 540px at 88% 10%, rgba(217,154,43,.13), transparent 70%),
+    radial-gradient(900px 260px at 50% 100%, rgba(217,154,43,.09), transparent 75%);
+}
+/* faint measurement grid, densest around the orbit system */
+header.hero::after{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(234,244,240,.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(234,244,240,.07) 1px, transparent 1px);
+  background-size:56px 56px;
+  -webkit-mask-image:radial-gradient(closest-side at 65% 42%, rgba(0,0,0,1), transparent 100%);
+  mask-image:radial-gradient(closest-side at 65% 42%, rgba(0,0,0,1), transparent 100%);
 }
 .hero-deco{
   position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;
 }
-.hero-deco svg{position:absolute;top:-140px;right:-160px;width:820px;height:820px;opacity:.9}
-.hero-deco .orbit{fill:none;stroke:rgba(234,244,240,.10);stroke-width:1}
-.hero-deco .orbit.amber{stroke:rgba(217,154,43,.28);stroke-dasharray:3 7}
-.hero-deco .node{fill:rgba(217,154,43,.75)}
-.hero-deco .node.dim{fill:rgba(234,244,240,.35)}
-.hero-deco .link{stroke:rgba(234,244,240,.14);stroke-width:1}
-.hero-deco .spin{transform-origin:410px 410px;animation:orbitspin 90s linear infinite}
+/* live particle field simulation */
+#heroField{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero-deco svg.orbit-main{position:absolute;top:-160px;right:-180px;width:920px;height:920px;opacity:1}
+.hero-deco svg.orbit-sm{position:absolute;bottom:130px;left:-150px;width:460px;height:460px;opacity:.9}
+.hero-deco .orbit{fill:none;stroke:rgba(234,244,240,.18);stroke-width:1}
+.hero-deco .orbit.amber{stroke:rgba(217,154,43,.6);stroke-dasharray:3 7}
+.hero-deco .orbit.fine{stroke:rgba(234,244,240,.1);stroke-dasharray:1 6}
+.hero-deco .node{fill:rgba(217,154,43,1)}
+.hero-deco .node.dim{fill:rgba(234,244,240,.6)}
+.hero-deco .halo{fill:none;stroke:rgba(217,154,43,.5);stroke-width:1;animation:haloPulse 3.4s ease-in-out infinite}
+@keyframes haloPulse{0%,100%{opacity:.2}50%{opacity:.85}}
+.hero-deco .link{stroke:rgba(234,244,240,.24);stroke-width:1}
+.hero-deco .spin{transform-origin:410px 410px;animation:orbitspin 70s linear infinite}
+.hero-deco .spin.rev{animation-duration:120s;animation-direction:reverse}
+.hero-deco .spin-sm{transform-origin:200px 200px;animation:orbitspin 100s linear infinite reverse}
 @keyframes orbitspin{to{transform:rotate(360deg)}}
+/* dashed signal trace drifting across the hero */
+.hero-signal{
+  position:absolute;left:0;right:0;top:15%;height:120px;z-index:0;pointer-events:none;opacity:.7;
+}
+.hero-signal svg{display:block;width:100%;height:100%}
+.hero-signal path{
+  fill:none;stroke:rgba(217,154,43,.45);stroke-width:1.5;stroke-dasharray:6 9;
+  animation:signalflow 22s linear infinite;
+}
+@keyframes signalflow{to{stroke-dashoffset:-600}}
 .hero-plus{
-  position:absolute;font-family:'IBM Plex Mono',monospace;color:rgba(217,154,43,.4);
+  position:absolute;font-family:'IBM Plex Mono',monospace;color:rgba(217,154,43,.45);
   font-size:1rem;user-select:none;
 }
+.hero-plus.lg{font-size:1.5rem;color:rgba(217,154,43,.55)}
+.hero-plus.sm{font-size:.75rem;color:rgba(234,244,240,.3)}
+.hero-dot{
+  position:absolute;width:5px;height:5px;border-radius:50%;
+  background:rgba(217,154,43,.6);box-shadow:0 0 10px rgba(217,154,43,.45);
+}
+.hero-dot.dim{width:4px;height:4px;background:rgba(234,244,240,.35);box-shadow:none}
 @media (max-width:880px){
-  .hero-deco svg{top:-220px;right:-300px}
+  .hero-deco svg.orbit-main{top:-240px;right:-320px}
+  .hero-deco svg.orbit-sm{display:none}
+  .hero-signal{display:none}
+  header.hero::after{background-size:44px 44px}
 }
 
 /* signature waveform */
-.wave-wrap{position:relative;margin-top:64px;height:180px}
-.wave-wrap svg{display:block;width:100%;height:100%}
-.wave-bar{fill:rgba(217,154,43,.85);transform-origin:center bottom;animation:pulse 2.8s ease-in-out infinite}
+.wave-wrap{position:relative;margin-top:56px;height:210px;padding-bottom:14px}
+.wave-wrap svg{display:block;width:100%;height:calc(100% - 14px)}
+.wave-bar{fill:rgba(217,154,43,.95);transform-origin:center bottom;animation:pulse 2.8s ease-in-out infinite}
 @keyframes pulse{0%,100%{transform:scaleY(.45)}50%{transform:scaleY(1)}}
-.wave-caption{
-  position:absolute;right:28px;top:-6px;
-  font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.14em;
-  text-transform:uppercase;color:rgba(200,220,213,.6);
+.wave-base{
+  position:absolute;left:0;right:0;bottom:14px;height:1px;
+  background:linear-gradient(90deg, transparent, rgba(217,154,43,.55) 18%, rgba(217,154,43,.55) 82%, transparent);
 }
 
 
@@ -424,25 +464,67 @@ footer{
 
 <header class="hero" id="top">
   <div class="hero-deco" aria-hidden="true">
-    <svg viewBox="0 0 820 820" xmlns="http://www.w3.org/2000/svg">
+    <canvas id="heroField"></canvas>
+    <svg class="orbit-main" viewBox="0 0 820 820" xmlns="http://www.w3.org/2000/svg">
+      <circle class="orbit" cx="410" cy="410" r="110"/>
       <circle class="orbit" cx="410" cy="410" r="150"/>
       <circle class="orbit amber" cx="410" cy="410" r="230"/>
       <circle class="orbit" cx="410" cy="410" r="310"/>
+      <circle class="orbit fine" cx="410" cy="410" r="350"/>
       <circle class="orbit" cx="410" cy="410" r="390"/>
       <g class="spin">
-        <circle class="node" cx="410" cy="180" r="4"/>
-        <circle class="node dim" cx="640" cy="410" r="3"/>
-        <circle class="node dim" cx="255" cy="600" r="3"/>
-        <circle class="node" cx="130" cy="330" r="3.5"/>
+        <circle class="node" cx="410" cy="180" r="5"/>
+        <circle class="halo" cx="410" cy="180" r="12"/>
+        <circle class="node dim" cx="640" cy="410" r="3.5"/>
+        <circle class="node dim" cx="255" cy="600" r="3.5"/>
+        <circle class="node" cx="130" cy="330" r="4"/>
         <line class="link" x1="410" y1="180" x2="640" y2="410"/>
         <line class="link" x1="640" y1="410" x2="255" y2="600"/>
         <line class="link" x1="130" y1="330" x2="410" y2="180"/>
+        <line class="link" x1="130" y1="330" x2="255" y2="600"/>
+      </g>
+      <g class="spin rev">
+        <circle class="node dim" cx="410" cy="100" r="3"/>
+        <circle class="node" cx="676" cy="565" r="3.5"/>
+        <circle class="halo" cx="676" cy="565" r="10"/>
+        <circle class="node dim" cx="140" cy="565" r="3"/>
+        <line class="link" x1="410" y1="100" x2="676" y2="565"/>
+        <line class="link" x1="676" y1="565" x2="140" y2="565"/>
       </g>
       <circle class="node dim" cx="410" cy="410" r="2.5"/>
+      <circle class="halo" cx="410" cy="410" r="8"/>
     </svg>
-    <span class="hero-plus" style="top:18%;left:44%">+</span>
+    <svg class="orbit-sm" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+      <circle class="orbit" cx="200" cy="200" r="90"/>
+      <circle class="orbit amber" cx="200" cy="200" r="140"/>
+      <circle class="orbit fine" cx="200" cy="200" r="185"/>
+      <g class="spin-sm">
+        <circle class="node" cx="200" cy="60" r="3"/>
+        <circle class="node dim" cx="330" cy="235" r="2.5"/>
+        <circle class="node dim" cx="85" cy="290" r="2.5"/>
+        <line class="link" x1="200" y1="60" x2="330" y2="235"/>
+        <line class="link" x1="330" y1="235" x2="85" y2="290"/>
+        <line class="link" x1="85" y1="290" x2="200" y2="60"/>
+      </g>
+      <circle class="node dim" cx="200" cy="200" r="2"/>
+    </svg>
+    <div class="hero-signal">
+      <svg viewBox="0 0 1680 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 60 C 80 18, 160 18, 240 60 S 400 102, 480 60 S 640 18, 720 60 S 880 102, 960 60 S 1120 18, 1200 60 S 1360 102, 1440 60 S 1600 18, 1680 60"/>
+      </svg>
+    </div>
+    <span class="hero-plus lg" style="top:16%;left:44%">+</span>
     <span class="hero-plus" style="top:64%;left:52%">+</span>
     <span class="hero-plus" style="top:38%;left:4%">+</span>
+    <span class="hero-plus sm" style="top:26%;left:30%">+</span>
+    <span class="hero-plus sm" style="top:74%;left:12%">+</span>
+    <span class="hero-plus" style="top:82%;left:64%">+</span>
+    <span class="hero-plus sm" style="top:8%;left:8%">+</span>
+    <span class="hero-dot" style="top:22%;left:56%"></span>
+    <span class="hero-dot dim" style="top:47%;left:38%"></span>
+    <span class="hero-dot dim" style="top:70%;left:26%"></span>
+    <span class="hero-dot" style="top:58%;left:7%"></span>
+    <span class="hero-dot dim" style="top:12%;left:26%"></span>
   </div>
   <div class="hero-inner">
     <div class="hero-grid">
@@ -469,6 +551,7 @@ footer{
   </div>
   <div class="wave-wrap" aria-hidden="true">
     <svg id="wave" viewBox="0 0 1200 120" preserveAspectRatio="none"></svg>
+    <div class="wave-base"></div>
   </div>
 </header>
 
@@ -855,6 +938,75 @@ footer{
 </footer>
 
 <script>
+// Hero particle field: drifting nodes that link to near neighbours
+(function(){
+  const canvas = document.getElementById('heroField');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const AMBER = '217,154,43', MIST = '234,244,240';
+  let W, H, pts = [], raf;
+
+  function build(){
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+    const target = Math.min(110, Math.max(40, Math.round(W * H / 16000)));
+    pts = [];
+    for (let i = 0; i < target; i++) {
+      pts.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - .5) * .35,
+        vy: (Math.random() - .5) * .35,
+        r: Math.random() * 1.6 + .8,
+        amber: Math.random() < .38,
+        ph: Math.random() * Math.PI * 2
+      });
+    }
+  }
+
+  const LINK = 140;
+  function frame(t){
+    ctx.clearRect(0, 0, W, H);
+    // links
+    for (let i = 0; i < pts.length; i++) {
+      const a = pts[i];
+      for (let j = i + 1; j < pts.length; j++) {
+        const b = pts[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const d2 = dx * dx + dy * dy;
+        if (d2 < LINK * LINK) {
+          const alpha = (1 - Math.sqrt(d2) / LINK) * .22;
+          ctx.strokeStyle = 'rgba(' + ((a.amber && b.amber) ? AMBER : MIST) + ',' + alpha.toFixed(3) + ')';
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
+      }
+    }
+    // nodes with a slow breathing pulse
+    for (const p of pts) {
+      const pulse = reduced ? 1 : (.7 + .3 * Math.sin(t / 1400 + p.ph));
+      ctx.fillStyle = 'rgba(' + (p.amber ? AMBER : MIST) + ',' + (p.amber ? .75 * pulse : .45 * pulse).toFixed(3) + ')';
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r * pulse, 0, Math.PI * 2); ctx.fill();
+      if (!reduced) {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < -10) p.x = W + 10; else if (p.x > W + 10) p.x = -10;
+        if (p.y < -10) p.y = H + 10; else if (p.y > H + 10) p.y = -10;
+      }
+    }
+    if (!reduced) raf = requestAnimationFrame(frame);
+  }
+
+  function start(){
+    cancelAnimationFrame(raf);
+    build();
+    if (reduced) { frame(0); } else { raf = requestAnimationFrame(frame); }
+  }
+  let rt;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(start, 200); });
+  start();
+})();
+
 // Signature waveform: deterministic speech-like envelope
 (function(){
   const svg = document.getElementById('wave');
@@ -874,7 +1026,7 @@ footer{
     const x = (i / N) * W;
     const delay = (i * 0.025) % 2.8;
     html += '<rect class="wave-bar" x="' + x.toFixed(1) + '" y="' + (H - h).toFixed(1) +
-            '" width="5" height="' + h.toFixed(1) + '" rx="2.5" style="animation-delay:' + delay.toFixed(2) + 's"></rect>';
+            '" width="6" height="' + h.toFixed(1) + '" rx="3" style="animation-delay:' + delay.toFixed(2) + 's"></rect>';
   }
   svg.innerHTML = html;
 })();
